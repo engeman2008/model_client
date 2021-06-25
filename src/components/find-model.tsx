@@ -13,6 +13,7 @@ const FindModel = () => {
   const [jsonValue, setJsonValue] = useState({});
   const [error, setError] = useState('');
   const [deltas, setDeltas] = useState<IDelta[]>([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const idChangedHandler = (event: any) => {
     setId(event.target.value);
@@ -22,6 +23,21 @@ const FindModel = () => {
     modelService.get(id)
       .then((res) => {
         setJsonValue(res.data.data);
+        setError('');
+      })
+      .catch((e) => {
+        setError(e.response.data.message);
+      });
+  };
+
+  const saveDeltasHandler = () => {
+    modelService.deltas(id, deltas)
+      .then((res) => {
+        setSubmitted(true);
+        console.log(res);
+        setJsonValue(res.data.data);
+        setDeltas([]);
+        setError('');
       })
       .catch((e) => {
         setError(e.response.data.message);
@@ -29,28 +45,25 @@ const FindModel = () => {
   };
 
   const Remove = (object: any) => {
-    console.log(object);
-    const { namespace, name, existing_src } = object;
-    const path = `${namespace.join('/')}/${name}`;
+    const { namespace, name } = object;
+
+    let path: string = '';
+    if (namespace.length !== 0) {
+      path = `/${namespace.join('/')}/${name}`;
+    } else {
+      path = `/${name}`;
+    }
     const delta = { op: 'remove', path };
     setDeltas((oldDeltas: IDelta[]) => [...oldDeltas, delta]);
-    console.log(deltas);
-    setJsonValue(existing_src);
-    return existing_src;
   };
 
   const Change = (object: any) => {
-    console.log(object);
     const { namespace, name, new_value } = object;
-    const path = `${namespace.join('/')}/${name}`;
+    const path = `/${namespace.join('/')}/${name}`;
     const delta = { op: 'replace', path, value: new_value };
     setDeltas((oldDeltas: IDelta[]) => [...oldDeltas, delta]);
-    console.log(deltas);
   };
 
-  const Add = (object: any) => {
-    console.log(object);
-  };
   return (
     // <ReactJson src={data} onEdit={() => {}} onAdd={() => {}} />
     <div className="container">
@@ -61,6 +74,11 @@ const FindModel = () => {
       {error ? (
         <div className="alert alert-danger" role="alert">
           {error}
+        </div>
+      ) : ''}
+      {submitted ? (
+        <div className="alert alert-success" role="alert">
+          Updated successfully
         </div>
       ) : ''}
 
@@ -84,14 +102,14 @@ const FindModel = () => {
           {id
             ? (
               <div className="col-sm-1">
-                <button type="submit" onClick={submitHandler} className="btn btn-primary"> Save</button>
+                <button type="submit" onClick={saveDeltasHandler} className="btn btn-primary"> Save</button>
               </div>
             )
             : ''}
         </div>
         <div className="row">
           <div className="col-sm-8">
-            <ReactJson src={jsonValue} onAdd={Add} onDelete={Remove} onEdit={Change} theme="monokai" />
+            <ReactJson src={jsonValue} onDelete={Remove} onEdit={Change} theme="monokai" />
           </div>
           <div className="col-sm-4">
             <ReactJson src={deltas} theme="monokai" />

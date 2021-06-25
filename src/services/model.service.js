@@ -10,8 +10,8 @@ class TutorialDataService {
     return http.post('/create-model', data);
   }
 
-  update(id, data) {
-    return http.put(`/model/${id}/deltas`, data);
+  deltas(id, data) {
+    return http.post(`/model/${id}/deltas`, data);
   }
 }
 

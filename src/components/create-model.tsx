@@ -36,6 +36,11 @@ const CreateModel = () => {
   return (
     // <ReactJson src={data} onEdit={() => {}} onAdd={() => {}} />
     <div className="container">
+      <div className="alert alert-info" role="alert">
+        Type your text then press Enter to view on left panel
+        <br />
+        To save press Submit
+      </div>
       {error ? (
         <div className="alert alert-danger" role="alert">
           error
