@@ -5,23 +5,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import CreateModel from './components/create-model';
-// import Model from './components/model.component';
+import FindModel from './components/find-model';
 
 const App = () => (
   <div>
     <nav className="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/models" className="navbar-brand">
-        Models
-      </a>
+
       <div className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link to="/models" className="nav-link">
-            Models
-          </Link>
-        </li>
         <li className="nav-item">
           <Link to="/create" className="nav-link">
             Create
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link to="/find" className="nav-link">
+            Find
           </Link>
         </li>
       </div>
@@ -30,7 +29,7 @@ const App = () => (
     <div className="container mt-3">
       <Switch>
         <Route exact path="/create" component={CreateModel} />
-        <Route path="/model/:id" component={Model} />
+        <Route path="/find" component={FindModel} />
         {/* <Route path="/model/:id/deltas" component={Model} /> */}
       </Switch>
     </div>

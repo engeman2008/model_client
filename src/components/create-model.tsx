@@ -6,12 +6,11 @@ import ReactJson from 'react-json-view';
 import modelService from '../services/model.service';
 
 const CreateModel = () => {
+  const [id, setId] = useState();
   const [jsonText, setJsonText] = useState('');
   const [jsonValue, setJsonValue] = useState({});
-  // eslint-disable-next-line no-unused-vars
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-  const [id, setId] = useState();
 
   const jsonChangedHandler = (event: any) => {
     setJsonText(event.target.value);
