@@ -51,6 +51,7 @@ const CreateModel = () => {
       {submitted ? (
         <div className="alert alert-primary" role="alert">
           Added successfully with id
+          {' '}
           {id}
         </div>
       ) : ''}
