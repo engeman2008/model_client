@@ -84,7 +84,7 @@ const FindModel = () => {
 
       <div>
         <div className="mb-3 row">
-          <label htmlFor="" className="col-sm-1 col-form-label">Title</label>
+          <label htmlFor="" className="col-sm-1 col-form-label">Model Id</label>
           <div className="col-sm-4">
             <input
               className="form-control"

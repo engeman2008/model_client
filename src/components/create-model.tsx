@@ -27,6 +27,8 @@ const CreateModel = () => {
         setSubmitted(true);
         console.log(res);
         setId(res.data.data._id);
+        setJsonText('');
+        setJsonValue({});
       })
       .catch((e) => {
         setError(e);
@@ -52,30 +54,28 @@ const CreateModel = () => {
           {id}
         </div>
       ) : ''}
-      {(!error && !submitted)
-        ? (
-          <div>
-            <button type="submit" onClick={submitHandler} className="btn btn-success" style={{ marginBottom: '10px' }}> Submit</button>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <textarea
-                    className="form-control"
-                    id="json"
-                    name="json"
-                    value={jsonText}
-                    onChange={jsonChangedHandler}
-                    placeholder="Type your json here.."
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <ReactJson src={jsonValue} theme="monokai" />
-              </div>
+
+      <div>
+        <button type="submit" onClick={submitHandler} className="btn btn-success" style={{ marginBottom: '10px' }}> Submit</button>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <textarea
+                className="form-control"
+                id="json"
+                name="json"
+                value={jsonText}
+                onChange={jsonChangedHandler}
+                placeholder="Type your json here.."
+              />
             </div>
           </div>
-        )
-        : ''}
+          <div className="col-md-6">
+            <ReactJson src={jsonValue} theme="monokai" />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
